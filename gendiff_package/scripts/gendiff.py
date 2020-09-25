@@ -1,5 +1,4 @@
 import argparse
-import json
 from gendiff.comparisons import generate_diff
 import os
 
@@ -19,8 +18,6 @@ def main():
         arg2 = os.getcwd() + '/' + arg2
     diff = generate_diff(arg1, arg2)
     print(diff)
-    
-
 
 
 if __name__ == '__main__':
