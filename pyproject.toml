@@ -4,7 +4,7 @@ version = "0.1.1"
 description = ""
 authors = ["Nikita <Nikita.Clark@yandex.ru>"]
 packages = [
- { include = 'gendiff_package' },
+ { include = 'gendiff' },
 ]
 
 [tool.poetry.dependencies]
@@ -14,7 +14,7 @@ python = "^3.6"
 flake8 = "^3.8.3"
 
 [tool.poetry.scripts]
-gendiff = 'gendiff.scripts.gendiff:main'
+run-gendiff = 'gendiff.scripts.gendiff:main'
 
 [build-system]
 requires = ["poetry>=0.12"]
