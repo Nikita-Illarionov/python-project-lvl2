@@ -3,6 +3,9 @@ name: link_and_pytest_check
 on:
   - push
   - pull_request
+env:
+  global:
+    CC_TEST_REPORTER_ID=e539b9109981ea8972259c0f79d6dd64365cab668d3b004e8806b9d0468becd3
 
 jobs:
   build:
