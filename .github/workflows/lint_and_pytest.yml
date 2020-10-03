@@ -26,9 +26,5 @@ jobs:
         run: |
           make lint
           make test
-      - name: Publish code coverage
-        uses: paambaati/codeclimate-action@v2.7.3
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: poetry run coverage xml
+      - name: Publish Code Coverage to CodeClimate
+        uses: codecov/codecov-action@v1
