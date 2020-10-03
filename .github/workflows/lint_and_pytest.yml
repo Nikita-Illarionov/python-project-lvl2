@@ -1,4 +1,4 @@
-name: link_and_pytest_check
+name: Travis CI
 
 on:
   - push
