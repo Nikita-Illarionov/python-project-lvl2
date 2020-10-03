@@ -6,26 +6,37 @@ def generate_string(input_data):
         keys = list(data.keys())
         keys.sort()
         for item in keys:
-            if data[item][0] == 'not changed' and type(data[item][1]) == dict:
-                answer += n*' ' + '  ' + str(item) + ': ' + '{\n'
-                answer += iter(data[item][1], n+4)
+            status = data[item][0]
+            value = data[item][1]
+            if status == 'not changed' and type(value) == dict:
+                answer += start_of_string(item, status, n) + '{\n'
+                answer += iter(value, n+4)
                 answer += n*' ' + '  }\n'
-            elif data[item][0] == 'not changed':
-                answer += n*' ' + '  ' + str(item) + ': ' + \
+            elif status == 'not changed':
+                answer += start_of_string(item, status, n) + \
+                       dop_generate_string(value, n+4) + '\n'
+            elif status == 'changed':
+                answer += start_of_string(item, status+'-', n) + \
                        dop_generate_string(data[item][1], n+4) + '\n'
-            elif data[item][0] == 'changed':
-                answer += n*' ' + '- ' + str(item) + ': ' + \
-                       dop_generate_string(data[item][1], n+4) + '\n'
-                answer += n*' ' + '+ ' + str(item) + ': ' + \
+                answer += start_of_string(item, status+'+', n) + \
                     dop_generate_string(data[item][2], n+4) + '\n'
-            elif data[item][0] == 'deleted':
-                answer += n*' ' + '- ' + str(item) + ': ' + \
-                       dop_generate_string(data[item][1], n+4) + '\n'
-            elif data[item][0] == 'added':
-                answer += n*' ' + '+ ' + str(item) + ': ' + \
-                       dop_generate_string(data[item][1], n+4) + '\n'
+            elif status == 'deleted':
+                answer += start_of_string(item, status, n) + \
+                       dop_generate_string(value, n+4) + '\n'
+            elif status == 'added':
+                answer += start_of_string(item, status, n) + \
+                       dop_generate_string(value, n+4) + '\n'
         return answer
     return '{\n' + iter(input_data, n) + '}\n'
+
+
+def start_of_string(item, status, n):
+    if status == 'not changed':
+        return n*' ' + '  ' + str(item) + ': '
+    elif status == 'changed-' or status == 'deleted':
+        return n*' ' + '- ' + str(item) + ': '
+    elif status == 'changed+' or status == 'added':
+        return n*' ' + '+ ' + str(item) + ': '
 
 
 def dop_generate_string(d, n):
