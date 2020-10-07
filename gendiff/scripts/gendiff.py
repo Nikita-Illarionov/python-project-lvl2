@@ -18,10 +18,12 @@ def main():
         if arg[0] != '/':
             arg = os.getcwd() + '/' + arg
     output_format = args.format
-    if output_format == 'plain':
-        output_function = generate_plain
-    elif output_format == 'json':
-        output_function = generate_json
+    dict_of_formats = {
+                       'plain': generate_plain,
+                       'json': generate_json
+                      }
+    if output_format in list(dict_of_formats.keys()):
+        output_function = dict_of_formats[output_format]
     else:
         output_function = generate_string
     diff = output_function(generate_diff(arg1, arg2))
