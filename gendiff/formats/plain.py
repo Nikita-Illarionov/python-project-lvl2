@@ -2,14 +2,13 @@ def generate_plain(input_data):
     def iter(data, way):
         change = ''
         keys = list(data.keys())
-        keys.sort()
         way = correct_way(way)
-        for item in keys:
+        for item in keys.sort():
             status = data[item][0]
             value = data[item][1]
             if status == 'not changed' and isinstance(value, dict):
                 change += iter(value, way+str(item))
-            if status in ['deleted', 'added', 'changed']:
+            elif status in ['deleted', 'added', 'changed']:
                 change += gen_string(data, item, way, status)
         return change
     return iter(input_data, '')
