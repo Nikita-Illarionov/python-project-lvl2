@@ -15,27 +15,17 @@ def generate_diff(file_path1, file_path2):
                 if isinstance(dat1, dict) and isinstance(dat2,dict):
                     extend_object(obj, item, iter(dat1, dat2),
                                   'not changed')
+                elif dat1 == dat2:
+                    extend_object(obj, item, dat1, 'not changed')
                 else:
-                    generate_obj(obj, item, dat1, dat2)
-            else: 
-                generate_dop_obj(obj1, obj, item, dat1, dat2)
+                    extend_object(obj, item, [dat1, dat2],
+                                  'changed')
+            elif item in obj1:
+                extend_object(obj, item, dat1, 'deleted')
+            else:
+                extend_object(obj, item, dat2, 'added')
         return obj
     return iter(data1, data2)
-
-
-def generate_obj(obj, item, dat1, dat2):
-    if dat1 == dat2:
-        extend_object(obj, item, dat1, 'not changed')
-    else:
-        extend_object(obj, item, [dat1, dat2],
-                                  'changed')
-
-def generate_dop_obj(obj1, obj, item, dat1, dat2):
-    if item in obj1:
-        extend_object(obj, item, dat1, 'deleted')
-    else:
-        extend_object(obj, item, dat2, 'added')
-
 
 
 def extend_object(obj, item, value, status):
