@@ -13,11 +13,10 @@ def main():
     parser.add_argument('-f', '--format', help='set format of output')
     args = parser.parse_args()
     arg1 = args.first_file
-    if arg1[0] != '/':
-        arg1 = os.getcwd() + '/' + arg1
     arg2 = args.second_file
-    if arg2[0] != '/':
-        arg2 = os.getcwd() + '/' + arg2
+    for arg in (arg1, arg2):
+        if arg[0] != '/':
+            arg = os.getcwd() + '/' + arg
     output_format = args.format
     if output_format == 'plain':
         output_function = generate_plain
