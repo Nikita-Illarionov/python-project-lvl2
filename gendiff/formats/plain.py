@@ -3,16 +3,21 @@ def generate_plain(input_data):
         change = ''
         keys = list(data.keys())
         keys.sort()
-        if way:
-            way += '.'
+        way = correct_way(way)
         for item in keys:
             status = data[item][0]
-            if status == 'not changed' and type(data[item][1]) == dict:
-                change += iter(data[item][1], way+str(item))
+            value = data[item][1]
+            if status == 'not changed' and isinstance(value, dict):
+                change += iter(value, way+str(item))
             if status in ['deleted', 'added', 'changed']:
                 change += gen_string(data, item, way, status)
         return change
     return iter(input_data, '')
+
+def correct_way(way):
+    if way:
+        way += '.'
+    return way
 
 
 def gen_string(data, item, way, status):
