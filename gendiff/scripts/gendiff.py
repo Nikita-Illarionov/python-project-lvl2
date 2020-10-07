@@ -17,15 +17,13 @@ def main():
     for arg in (arg1, arg2):
         if arg[0] != '/':
             arg = os.getcwd() + '/' + arg
-    output_format = args.format
+    output_format = args.format if args.format else 'string'
     dict_of_formats = {
                        'plain': generate_plain,
-                       'json': generate_json
+                       'json': generate_json,
+                       'string': generate_string
                       }
-    if output_format in list(dict_of_formats.keys()):
-        output_function = dict_of_formats[output_format]
-    else:
-        output_function = generate_string
+    output_function = dict_of_formats[output_format]
     diff = output_function(generate_diff(arg1, arg2))
     print(diff)
 

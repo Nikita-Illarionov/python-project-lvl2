@@ -1,53 +1,54 @@
-from gendiff.loading_files import extract_data
+from gendiff.loading_file import extract_data
 
 
 def generate_diff(file_path1, file_path2):
-    data1 = extract_data(file_path1)
-    data2 = extract_data(file_path2)
+    file_data1 = extract_data(file_path1)
+    file_data2 = extract_data(file_path2)
 
-    def iter(obj1, obj2):
-        obj = {}
-        list_of_keys = get_keys(obj1, obj2)
+    def iter(data1, data2):
+        data = {}
+        list_of_keys = get_keys(data1, data2)
         for item in list_of_keys:
-            dat1 = obj1.get(item)
-            dat2 = obj2.get(item)
-            if item in obj1 and item in obj2:
-                if isinstance(dat1, dict) and isinstance(dat2,dict):
-                    extend_object(obj, item, iter(dat1, dat2),
-                                  'not changed')
-                elif dat1 == dat2:
-                    extend_object(obj, item, dat1, 'not changed')
+            value1 = data1.get(item)
+            value2 = data2.get(item)
+            place = data, item
+            if item in data1 and item in data2:
+                if isinstance(value1, dict) and isinstance(value2,dict):
+                    add_dictionary(*place, iter(value1, value2))
+                elif value1 == value2:
+                    add_value(*place, value1, 'not changed')
                 else:
-                    extend_object(obj, item, [dat1, dat2],
+                    add_value(*place, [value1, value2],
                                   'changed')
-            elif item in obj1:
-                extend_object(obj, item, dat1, 'deleted')
+            elif item in data1:
+                add_value(*place, value1, 'deleted')
             else:
-                extend_object(obj, item, dat2, 'added')
-        return obj
-    return iter(data1, data2)
+                add_value(*place, value2, 'added')
+        return data
+    return iter(file_data1, file_data2)
+
+def add_dictionary(place, item, value):
+    add_value(place, item, value, 'not changed')
 
 
-def extend_object(obj, item, value, status):
-    obj[item] = [status]
+def add_value(data, item, value, status):
+    data[item] = [status]
     if status == 'not changed':
-        obj[item].append(value)
+        data[item].append(value)
     elif status == 'changed':
-        obj[item].append(value[0])
-        obj[item].append(value[1])
+        data[item].append(value[0])
+        data[item].append(value[1])
     elif status == 'deleted':
-        obj[item].append(value)
+        data[item].append(value)
     elif status == 'added':
-        obj[item].append(value)
+        data[item].append(value)
     else:
         print('Incorrect status.\n')
 
 
-def get_keys(obj1, obj2):
-    list_of_keys = list(set(obj1.keys()) | set(obj2.keys()))
+def get_keys(data1, data2):
+    list_of_keys = list(set(data1.keys()) | set(data2.keys()))
     list_of_keys.sort()
     return list_of_keys
 
 
-def get_value(obj, item):
-    return obj[item]

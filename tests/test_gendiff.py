@@ -1,6 +1,7 @@
 from gendiff.diff_functions import generate_diff
 from gendiff.formats.string import generate_string
 from gendiff.formats.plain import generate_plain
+from gendiff.formats.json import generate_json
 import sys
 
 way = sys.path[0]
@@ -44,4 +45,5 @@ def test_plain_format():
 
 
 def test_json_format():
-    return
+    return isinstance(generate_json(generate_diff(file_path1_json, 
+                                       file_path2_json)), dict)
