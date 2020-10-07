@@ -8,20 +8,27 @@ def generate_plain(input_data):
             way += '.'
         for item in keys:
             status = data[item][0]
-            start_of_string = "Property '" + way + str(item) + "'"
             if status == 'not changed' and type(data[item][1]) == dict:
                 change += iter(data[item][1], way+str(item))
-            if status == 'deleted':
-                change += start_of_string + ' was removed\n'
-            if status == 'added':
-                change += start_of_string + ' was added with value: ' + \
-                         generate_result(data[item][1]) + "\n"
-            if status == 'changed':
-                change += start_of_string + ' was updated. From ' + \
-                       generate_result(data[item][1]) + \
-                       ' to ' + generate_result(data[item][2]) + "\n"
+            if status in ['deleted', 'added', 'changed']:
+                change += start_of_string(item, way, status)
+                if status != 'deleted':
+                    change += generate_result(data[item][1])
+                    if status == 'changed':
+                        change += ' to ' + generate_result(data[item][2])
+                change += '\n'
         return change
     return iter(input_data, '')
+
+
+def start_of_string(item, way, status):
+    start = "Property '" + way + str(item) + "' "
+    dict_of_statuses = {
+                        'deleted': 'was removed',
+                        'added': 'was added with value: ',
+                        'changed': 'was updated. From '
+                       }
+    return start + dict_of_statuses[status]
 
 
 def generate_result(value):
