@@ -2,8 +2,9 @@ def generate_plain(input_data):
     def iter(data, way):
         change = ''
         keys = list(data.keys())
+        keys.sort()
         way = correct_way(way)
-        for item in keys.sort():
+        for item in keys:
             status = data[item][0]
             value = data[item][1]
             if status == 'not changed' and isinstance(value, dict):
