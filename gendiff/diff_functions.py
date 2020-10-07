@@ -13,19 +13,19 @@ def generate_diff(file_path1, file_path2):
             value2 = data2.get(item)
             place = data, item
             if item in data1 and item in data2:
-                if isinstance(value1, dict) and isinstance(value2,dict):
+                if isinstance(value1, dict) and isinstance(value2, dict):
                     add_dictionary(*place, iter(value1, value2))
                 elif value1 == value2:
                     add_value(*place, value1, 'not changed')
                 else:
-                    add_value(*place, [value1, value2],
-                                  'changed')
+                    add_value(*place, [value1, value2], 'changed')
             elif item in data1:
                 add_value(*place, value1, 'deleted')
             else:
                 add_value(*place, value2, 'added')
         return data
     return iter(file_data1, file_data2)
+
 
 def add_dictionary(place, item, value):
     add_value(place, item, value, 'not changed')
@@ -50,5 +50,3 @@ def get_keys(data1, data2):
     list_of_keys = list(set(data1.keys()) | set(data2.keys()))
     list_of_keys.sort()
     return list_of_keys
-
-

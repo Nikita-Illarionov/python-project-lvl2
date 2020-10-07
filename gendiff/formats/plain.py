@@ -14,6 +14,7 @@ def generate_plain(input_data):
         return plain_format
     return iter(input_data, '')
 
+
 def get_way(way):
     if way:
         way += '.'
@@ -27,7 +28,8 @@ def add_string(data, item, way, status):
         if status == 'changed':
             string += ' to ' + get_value(data[item][2])
     return string + '\n'
-    
+
+
 def get_description(item, way, status):
     first_part_of_string = "Property '" + way + str(item) + "' "
     dict_of_statuses = {

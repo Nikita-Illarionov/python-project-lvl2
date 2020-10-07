@@ -45,5 +45,5 @@ def test_plain_format():
 
 
 def test_json_format():
-    return isinstance(generate_json(generate_diff(file_path1_json, 
-                                       file_path2_json)), dict)
+    return isinstance(generate_json(generate_diff(file_path1_json,
+                                                  file_path2_json)), dict)
