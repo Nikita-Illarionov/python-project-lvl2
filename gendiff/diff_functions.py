@@ -9,24 +9,26 @@ def generate_diff(file_path1, file_path2):
         obj = {}
         list_of_keys = get_keys(obj1, obj2)
         for item in list_of_keys:
+            dat1 = obj1.get(item)
+            dat2 = obj2.get(item)
             if item in obj1 and item in obj2:
-                if type(obj1[item]) == dict and type(obj2[item]) == dict:
-                    extend_object(obj, item, iter(obj1[item], obj2[item]),
-                                  status='not changed')
-                elif obj1[item] == obj2[item]:
-                    extend_object(obj, item, obj1[item], status='not changed')
+                if isinstance(dat1, dict) and isinstance(dat2,dict):
+                    extend_object(obj, item, iter(dat1, dat2),
+                                  'not changed')
+                elif dat1 == dat2:
+                    extend_object(obj, item, dat1, 'not changed')
                 else:
-                    extend_object(obj, item, [obj1[item], obj2[item]],
-                                  status='changed')
+                    extend_object(obj, item, [dat1, dat2],
+                                  'changed')
             elif item in obj1:
-                extend_object(obj, item, obj1[item], status='deleted')
+                extend_object(obj, item, dat1, 'deleted')
             else:
-                extend_object(obj, item, obj2[item], status='added')
+                extend_object(obj, item, dat2, 'added')
         return obj
     return iter(data1, data2)
 
 
-def extend_object(obj, item, value, status='not changed'):
+def extend_object(obj, item, value, status):
     obj[item] = [status]
     if status == 'not changed':
         obj[item].append(value)

@@ -17,7 +17,7 @@ def generate_string(input_data):
                        dop_generate_string(value, n+4) + '\n'
             elif status == 'changed':
                 answer += start_of_string(item, status+'-', n) + \
-                       dop_generate_string(data[item][1], n+4) + '\n' +\
+                       dop_generate_string(value, n+4) + '\n' +\
                        start_of_string(item, status+'+', n) + \
                        dop_generate_string(data[item][2], n+4) + '\n'
         return answer
