@@ -7,20 +7,19 @@ def generate_plain(input_data):
         if way:
             way += '.'
         for item in keys:
-            if data[item][0] == 'deleted':
-                change += 'Property ' + "'" + way + str(item) + \
-                         "'" + ' was removed\n'
-            if data[item][0] == 'added':
-                change += 'Property ' + "'" + way + str(item) + \
-                         "'" + ' was added with value: ' + \
+            status = data[item][0]
+            start_of_string = "Property '" + way + str(item) + "'"
+            if status == 'not changed' and type(data[item][1]) == dict:
+                change += iter(data[item][1], way+str(item))
+            if status == 'deleted':
+                change += start_of_string + ' was removed\n'
+            if status == 'added':
+                change += start_of_string + ' was added with value: ' + \
                          generate_result(data[item][1]) + "\n"
-            if data[item][0] == 'changed':
-                change += 'Property ' + "'" + way + str(item) + \
-                       "'" + ' was updated. From ' + \
+            if status == 'changed':
+                change += start_of_string + ' was updated. From ' + \
                        generate_result(data[item][1]) + \
                        ' to ' + generate_result(data[item][2]) + "\n"
-            if data[item][0] == 'not changed' and type(data[item][1]) == dict:
-                change += iter(data[item][1], way+str(item))
         return change
     return iter(input_data, '')
 
