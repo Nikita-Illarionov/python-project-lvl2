@@ -12,7 +12,7 @@ def generate_string(input_data):
                 answer += start_of_string(item, status, n) + '{\n'
                 answer += iter(value, n+4)
                 answer += n*' ' + '  }\n'
-            elif status == 'not changed':
+            elif status in ['not changed', 'deleted', 'added']:
                 answer += start_of_string(item, status, n) + \
                        dop_generate_string(value, n+4) + '\n'
             elif status == 'changed':
@@ -20,12 +20,6 @@ def generate_string(input_data):
                        dop_generate_string(data[item][1], n+4) + '\n'
                 answer += start_of_string(item, status+'+', n) + \
                     dop_generate_string(data[item][2], n+4) + '\n'
-            elif status == 'deleted':
-                answer += start_of_string(item, status, n) + \
-                       dop_generate_string(value, n+4) + '\n'
-            elif status == 'added':
-                answer += start_of_string(item, status, n) + \
-                       dop_generate_string(value, n+4) + '\n'
         return answer
     return '{\n' + iter(input_data, n) + '}\n'
 
