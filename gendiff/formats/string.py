@@ -35,14 +35,12 @@ def add_string(data, item, n):
     string += n*' ' + statuses[status] + str(item) + ': '
     if status == 'nested':
         return string
-    elif status != 'changed':
-        string += form_value(data[item][1], n+indent_step) + '\n'
+    string += form_value(data[item][1], n+indent_step) + '\n'
+    if status != 'changed':
         return string
-    else:
-        string += form_value(data[item][1], n+indent_step) + '\n'
-        string += n*' ' + '+ ' + str(item) + ': '
-        string += form_value(data[item][2], n+indent_step) + '\n'
-        return string
+    string += n*' ' + '+ ' + str(item) + ': ' + \
+        form_value(data[item][2], n+indent_step) + '\n'
+    return string
 
 
 def form_value(value, n):
