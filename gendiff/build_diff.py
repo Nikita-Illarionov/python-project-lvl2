@@ -24,15 +24,11 @@ def generate_main(data1, data2):
         value1 = data1[item]
         value2 = data2[item]
         if value1 == value2:
-            data[item] = ['not changed']
-            data[item].append(value1)
+            data[item] = ['not changed', value1]
         elif isinstance(value1, dict) and isinstance(value2, dict):
-            data[item] = ['nested']
-            data[item].append(generate_main(value1, value2))
+            data[item] = ['nested', generate_main(value1, value2)]
         else:
-            data[item] = ['changed']
-            data[item].append(value1)
-            data[item].append(value2)
+            data[item] = ['changed', value1, value2]
     for item in set1 - set2:
         data[item] = ['deleted', data1[item]]
     for item in set2 - set1:
