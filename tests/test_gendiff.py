@@ -32,9 +32,9 @@ def test_string_format(file_path1, file_path2, f, expected):
     assert generate_diff(file_path1, file_path2, f) == expected
 
 
-@pytest.mark.parametrize('file_path1, file_path2, f, expected', data)
-def test_plain_format(file_path1, file_path2, f, expected):
-    assert generate_diff(file_path1, file_path2, f) == expected
+def test_plain_format():
+    assert generate_diff(new_file_path1_json,
+                         new_file_path2_json, 'plain') == answer3
 
 
 def test_json_format():
