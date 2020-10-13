@@ -1,5 +1,6 @@
 from gendiff.build_diff import generate_diff
 import sys
+import pytest
 
 way = sys.path[0]
 file_path1_json = way + '/fixtures/file1.json'
@@ -21,19 +22,14 @@ with open(way + '/fixtures/answer3.txt', 'r') as file:
     answer3 = file.read()
 
 
-def test_string_format_json():
-    assert generate_diff(file_path1_json,
-                         file_path2_json, 'string') == answer1
+data = [(file_path1_json, file_path2_json, 'string', answer1),
+        (file_path1_yaml, file_path2_yaml, 'string', answer1),
+        (new_file_path1_json, new_file_path2_json, 'string', answer2)]
 
 
-def test_string_format_yaml():
-    assert generate_diff(file_path1_yaml,
-                         file_path2_yaml, 'string') == answer1
-
-
-def test_string_format_json2():
-    assert generate_diff(new_file_path1_json,
-                         new_file_path2_json, 'string') == answer2
+@pytest.mark.parametrize('file_path1, file_path2, f, expected', data)
+def test_string_format(file_path1, file_path2, f, expected):
+    assert generate_diff(file_path1, file_path2, f) == expected
 
 
 def test_plain_format():
