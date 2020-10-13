@@ -16,7 +16,7 @@
 - скачать утилиту: 'test_env/bin/pip install -i https://...'
 - запустить утилиту (команда gendiff): gendiff file_path1 file_path2
 
-Пример использования
+Примеры использования:
 <a href="https://asciinema.org/a/AsTwN0oXV1AFxKqZg6g5po4tC" target="_blank"><img src="https://asciinema.org/a/AsTwN0oXV1AFxKqZg6g5po4tC.svg" /></a>
 
 <a href="https://asciinema.org/a/SXoiVCS1qg4KQYN00MQAzX5b8" target="_blank"><img src="https://asciinema.org/a/SXoiVCS1qg4KQYN00MQAzX5b8.svg" /></a>
