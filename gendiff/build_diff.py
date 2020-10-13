@@ -34,11 +34,7 @@ def generate_main(data1, data2):
             data[item].append(value1)
             data[item].append(value2)
     for item in set1 - set2:
-        value = data1[item]
-        data[item] = ['deleted']
-        data[item].append(value)
+        data[item] = ['deleted', data1[item]]
     for item in set2 - set1:
-        value = data2[item]
-        data[item] = ['added']
-        data[item].append(value)
+        data[item] = ['added', data2[item]]
     return data
