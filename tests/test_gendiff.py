@@ -1,7 +1,4 @@
-from gendiff.diff_functions import generate_diff
-from gendiff.formats.string import generate_string
-from gendiff.formats.plain import generate_plain
-from gendiff.formats.json import generate_json
+from gendiff.build_diff import generate_diff
 import sys
 
 way = sys.path[0]
@@ -25,25 +22,25 @@ with open(way + '/fixtures/answer3.txt', 'r') as file:
 
 
 def test_string_format_json():
-    assert generate_string(generate_diff(file_path1_json,
-                                         file_path2_json)) == answer1
+    assert generate_diff(file_path1_json,
+                         file_path2_json, 'string') == answer1
 
 
 def test_string_format_yaml():
-    assert generate_string(generate_diff(file_path1_yaml,
-                                         file_path2_yaml)) == answer1
+    assert generate_diff(file_path1_yaml,
+                         file_path2_yaml, 'string') == answer1
 
 
 def test_string_format_json2():
-    assert generate_string(generate_diff(new_file_path1_json,
-                                         new_file_path2_json)) == answer2
+    assert generate_diff(new_file_path1_json,
+                         new_file_path2_json, 'string') == answer2
 
 
 def test_plain_format():
-    assert generate_plain(generate_diff(new_file_path1_json,
-                                        new_file_path2_json)) == answer3
+    assert generate_diff(new_file_path1_json,
+                         new_file_path2_json, 'plain') == answer3
 
 
 def test_json_format():
-    return isinstance(generate_json(generate_diff(file_path1_json,
-                                                  file_path2_json)), dict)
+    return isinstance(generate_diff(file_path1_json,
+                      file_path2_json, 'json'), dict)
