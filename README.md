@@ -11,9 +11,9 @@
 - Генерация отчета в виде plain text, stylish и json
 
 Инструкция по установке и использованию (видеоинструкцию можно посмотреть ниже):
-- создать виртуальное окружение: 'python -m venv test_env'
-- обновить pip (рекомендуется): 'test_env/bin/pip install --upgrade pip
-- скачать утилиту: 'test_env/bin/pip install -i https://test.pypi.org/simple/ nikita-illarionov-gendiff'
+- создать виртуальное окружение: python -m venv test_env
+- обновить pip (рекомендуется): test_env/bin/pip install --upgrade pip
+- скачать утилиту: test_env/bin/pip install -i https://test.pypi.org/simple/ nikita-illarionov-gendiff
 - запустить утилиту (команда gendiff): gendiff file_path1 file_path2
 
 Примеры использования:
