@@ -4,7 +4,19 @@
 
 <a href="https://github.com/Nikita-Illarionov/python-project-lvl2/actions"><img src="https://github.com/Nikita-Illarionov/python-project-lvl2/workflows/Travis_CI/badge.svg" /></a>
 
+Вычислитель отличий – программа определяющая разницу между между двумя структурами данных. Это популярная задача, для решения которой существует множество онлайн сервисов http://www.jsondiff.com/. Подобный механизм, например, используется при выводе тестов или при автоматическом отслеживании изменении в конфигурационных файлах.
 
+Возможности утилиты:
+- Поддержка разных форматов входных данных: json, yaml
+- Генерация отчета в виде plain text, stylish и json
+
+Инструкция по установке и использованию (видеоинструкцию можно посмотреть ниже):
+- создать виртуальное окружение: 'python -m venv test_env'
+- обновить pip (рекомендуется): 'test_env/bin/pip install --upgrade pip
+- скачать утилиту: 'test_env/bin/pip install -i https://...'
+- запустить утилиту (команда gendiff): gendiff file_path1 file_path2
+
+Пример использования
 <a href="https://asciinema.org/a/AsTwN0oXV1AFxKqZg6g5po4tC" target="_blank"><img src="https://asciinema.org/a/AsTwN0oXV1AFxKqZg6g5po4tC.svg" /></a>
 
 <a href="https://asciinema.org/a/SXoiVCS1qg4KQYN00MQAzX5b8" target="_blank"><img src="https://asciinema.org/a/SXoiVCS1qg4KQYN00MQAzX5b8.svg" /></a>
