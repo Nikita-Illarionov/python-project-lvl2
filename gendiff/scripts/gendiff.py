@@ -9,9 +9,7 @@ def main():
     parser.add_argument('-f', '--format', help='set format of output',
                         default='string')
     args = parser.parse_args()
-    arg1 = args.first_file
-    arg2 = args.second_file
-    diff = generate_diff(arg1, arg2, args.format)
+    diff = generate_diff(args.first_file, args.second_file, args.format)
     print(diff)
 
 
