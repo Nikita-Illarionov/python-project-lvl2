@@ -4,6 +4,8 @@ states = {
           'changed': 'was updated. From '
          }
 
+s = "Property '" + way + str(key) + "' " + states[state]
+
 def format(input_data):
     return make_format(input_data, '')
 
@@ -21,13 +23,11 @@ def make_format(data, way):
         if state == 'nested':
             result += make_format(value, way+str(key))
         if state == 'deleted':
-            result += "Property '" + way + str(key) + "' " + states[state] + '\n'
+            result += s + '\n'
         if state == 'added':
-            result += "Property '" + way + str(key) + "' " + states[state] +\
-            to_str(value) + '\n'
+            result += s + to_str(value) + '\n'
         if state == 'changed':
-            result += "Property '" + way + str(key) + "' " + states[state] +\
-            to_str(value) + ' to ' + to_str(new_value) + '\n'
+            result += s + to_str(value) + ' to ' + to_str(new_value) + '\n'
     return result
 
 
