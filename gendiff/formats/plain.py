@@ -20,35 +20,14 @@ def make_format(data, way):
             value, new_value = value
         if state == 'nested':
             result += make_format(value, way+str(key))
-        elif state != 'unchanged':
-            result += "Property '" + way + str(key) + "' " + states[state]
-            if state == 'deleted':
-                result += '\n'
-            else:
-                result += to_str(value)
-                if state == 'added':
-                    result += '\n'
-                else:
-                    result += ' to ' + to_str(new_value) + '\n'
-    return result
-
-
-def make_property(data, key, way):
-    state, value = data[key]
-    if state == 'changed':
-        value, new_value = value
-    states = {
-                'deleted': 'was removed',
-                'added': 'was added with value: ',
-                'changed': 'was updated. From '
-               }
-    result = "Property '" + way + str(key) + "' " + states[state]
-    if state == 'deleted':
-        return result + '\n'
-    result += convert_to_str(value)
-    if state == 'added':
-        return result + '\n'
-    result += ' to ' + convert_to_str(new_value) + '\n'
+        if state == 'deleted':
+            result += "Property '" + way + str(key) + "' " + states[state] + '\n'
+        if state == 'added':
+            result += "Property '" + way + str(key) + "' " + states[state] +\
+            to_str(value) + '\n'
+        if state == 'changed':
+            result += "Property '" + way + str(key) + "' " + states[state] +\
+            to_str(value) + ' to ' + to_str(new_value) + '\n'
     return result
 
 
