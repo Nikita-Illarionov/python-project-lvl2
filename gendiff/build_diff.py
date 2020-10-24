@@ -16,15 +16,20 @@ def generate_diff(file_path1, file_path2, output_format):
 
 def make_diff(data1, data2):
     data = {}
-    for key in data1.keys() & data2.keys():
-        if data1[key] == data2[key]:
-            data[key] = 'unchanged', data1[key]
-        elif isinstance(data1[key], dict) and isinstance(data2[key], dict):
-            data[key] = 'nested', make_diff(data1[key], data2[key])
+    set1 = set(data1.keys())
+    set2 = set(data2.keys())
+    for key in set1 & set2:
+        value1 = data1[key]
+        value2 = data2[key]
+        if value1 == value2:
+            data[key] = 'unchanged', value1
+        elif isinstance(value1, dict) and isinstance(value2, dict):
+            data[key] = 'nested', make_diff(value1, value2)
         else:
-            data[key] = 'changed', (data1[key], data2[key])
-    for key in data1.keys() - data2.keys():
-        data[key] = 'deleted', data1[key]
-    for key in data2.keys() - data1.keys():
-        data[key] = 'added', data2[key]
+            data[key] = 'changed', (value1, value2)
+    for key in set1 ^ set2:
+        if key in set1:
+            data[key] = 'deleted', data1[key]
+        else:
+            data[key] = 'added', data2[key]
     return data
