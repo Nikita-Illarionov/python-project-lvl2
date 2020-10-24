@@ -5,30 +5,23 @@ import pytest
 way = sys.path[0] + '/fixtures/'
 
 
-def open_file(name):
+def read_file(name):
     with open(way + name, 'r') as file:
         return file.read()
 
 
-data = [(way + 'file1.json', way + 'file2.json', 'string',
-         open_file('answer1.txt')),
-        (way + 'file1.yaml', way + 'file2.yaml', 'string',
-         open_file('answer1.txt')),
-        (way + 'new_file1.json', way + 'new_file2.json', 'string',
-         open_file('answer2.txt'))]
+cases = [(way + 'file1.json', way + 'file2.json', 'stylish',
+         read_file('answer_stylish1.txt')),
+        (way + 'file1.yaml', way + 'file2.yaml', 'stylish',
+         read_file('answer_stylish1.txt')),
+        (way + 'big_file1.json', way + 'big_file2.json', 'stylish',
+         read_file('answer_stylish2.txt')),
+        (way + 'big_file1.json', way + 'big_file2.json', 'plain',
+         read_file('answer_plain.txt')),
+        (way + 'file1.yaml', way + 'file2.yaml', 'json',
+         read_file('answer_json.txt'))]
 
 
-@pytest.mark.parametrize('file_path1, file_path2, f, expected', data)
-def test_string_format(file_path1, file_path2, f, expected):
+@pytest.mark.parametrize('file_path1, file_path2, f, expected', cases)
+def test_format(file_path1, file_path2, f, expected):
     assert generate_diff(file_path1, file_path2, f) == expected
-
-
-def test_plain_format():
-    assert generate_diff(way + 'new_file1.json',
-                         way + 'new_file2.json',
-                         'plain') == open_file('answer3.txt')
-
-
-def test_json_format():
-    return isinstance(generate_diff(way + 'file1.json',
-                      way + 'file2.json', 'json'), dict)
