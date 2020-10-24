@@ -11,18 +11,16 @@ def format(input_data):
 
 def make_format(data, way):
     result = ''
-    keys = list(data.keys())
-    keys.sort()
     if way:  # Если у нас не начало пути,то уровни вложенности отделяем точками
         way += '.'
-    for key in keys:
+    for key in sorted(list(data.keys())):
         state, value = data[key]
         if state == 'nested':
             result += make_format(value, way+str(key))
         if state == 'deleted':
-            result += s(state, key,way) + '\n'
+            result += s(state, key, way) + '\n'
         if state == 'added':
-            result += s(state, key,way) + to_str(value) + '\n'
+            result += s(state, key, way) + to_str(value) + '\n'
         if state == 'changed':
             value, new_value = value
             result += s(state, key,way) + to_str(value) + ' to ' +\
