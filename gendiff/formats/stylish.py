@@ -35,15 +35,15 @@ def make_property(data, key, n):
     result = n*' ' + states[state] + str(key) + ': '
     if state == 'nested':
         return result
-    result += convert_to_str(value, n+indent_step) + '\n'
+    result += to_str(value, n+indent_step) + '\n'
     if state != 'changed':
         return result
     result += n*' ' + '+ ' + str(key) + ': ' + \
-        convert_to_str(new_value, n+indent_step) + '\n'
+        to_str(new_value, n+indent_step) + '\n'
     return result
 
 
-def convert_to_str(value, n):
+def to_str(value, n):
     if not isinstance(value, dict):
         return str(value)
     else:
@@ -51,5 +51,5 @@ def convert_to_str(value, n):
         keys = list(value.keys())
         for key in keys:
             result += '\n' + n*' ' + '  ' + str(key) + ': ' + \
-                   convert_to_str(value[key], n+4)
+                   to_str(value[key], n+4)
         return result + '\n' + (n-2)*' ' + '}'
