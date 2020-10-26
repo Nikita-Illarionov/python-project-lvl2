@@ -10,7 +10,8 @@ def read_file(name):
         return file.read()
 
 
-cases = [(way + 'empty_file1.json', way + 'empty_file2.json', 'plain', ''),
+cases = [(way + 'small_file1.json', way + 'small_file2.json', 'plain',
+         read_file('answer_small_plain.txt')),
          (way + 'file1.json', way + 'file2.json', 'stylish',
          read_file('answer_stylish1.txt')),
          (way + 'file1.yaml', way + 'file2.yaml', 'stylish',

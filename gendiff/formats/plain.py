@@ -35,6 +35,6 @@ def make_property(state, key, way):
 def to_str(value):
     if isinstance(value, dict):
         return '[complex value]'
-    if isinstance(value, bool):
+    if isinstance(value, bool) or value is None:
         return str(value)
     return "'" + str(value) + "'"
