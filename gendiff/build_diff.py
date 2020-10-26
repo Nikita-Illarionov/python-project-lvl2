@@ -6,9 +6,9 @@ def generate_diff(file_path1, file_path2, output_format):
     file_data1 = extract_data(file_path1)
     file_data2 = extract_data(file_path2)
     formats = {
-               'plain': plain.format,
-               'json': json.format,
-               'stylish': stylish.format
+               'plain': plain.render,
+               'json': json.render,
+               'stylish': stylish.render
               }
     generate_format = formats[output_format]
     return generate_format(make_diff(file_data1, file_data2))

@@ -10,15 +10,16 @@ def read_file(name):
         return file.read()
 
 
-cases = [(way + 'file1.json', way + 'file2.json', 'stylish',
+cases = [(way + 'empty_file1.json', way + 'empty_file2.json', 'plain', ''),
+         (way + 'file1.json', way + 'file2.json', 'stylish',
          read_file('answer_stylish1.txt')),
-        (way + 'file1.yaml', way + 'file2.yaml', 'stylish',
+         (way + 'file1.yaml', way + 'file2.yaml', 'stylish',
          read_file('answer_stylish1.txt')),
-        (way + 'big_file1.json', way + 'big_file2.json', 'stylish',
+         (way + 'big_file1.json', way + 'big_file2.json', 'stylish',
          read_file('answer_stylish2.txt')),
-        (way + 'big_file1.json', way + 'big_file2.json', 'plain',
+         (way + 'big_file1.json', way + 'big_file2.json', 'plain',
          read_file('answer_plain.txt')),
-        (way + 'file1.yaml', way + 'file2.yaml', 'json',
+         (way + 'file1.yaml', way + 'file2.yaml', 'json',
          read_file('answer_json.txt'))]
 
 

@@ -5,7 +5,7 @@ states = {
          }
 
 
-def format(input_data):
+def render(input_data):
     return make_format(input_data, '')
 
 
@@ -18,16 +18,17 @@ def make_format(data, way):
         if state == 'nested':
             result += make_format(value, way+str(key))
         if state == 'deleted':
-            result += s(state, key, way) + '\n'
+            result += make_property(state, key, way) + '\n'
         if state == 'added':
-            result += s(state, key, way) + to_str(value) + '\n'
+            result += make_property(state, key, way) + to_str(value) + '\n'
         if state == 'changed':
             value, new_value = value
-            result += s(state, key,way) + to_str(value) + ' to ' +\
-            to_str(new_value) + '\n'
+            result += (make_property(state, key, way) + to_str(value) + ' to '
+                       + to_str(new_value) + '\n')
     return result
 
-def s(state, key, way):
+
+def make_property(state, key, way):
     return "Property '" + way + str(key) + "' " + states[state]
 
 

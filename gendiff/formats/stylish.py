@@ -2,7 +2,7 @@ indent = 2
 indent_step = 4
 
 
-def format(input_data):
+def render(input_data):
     return '{\n' + make_format(input_data, indent) + '}\n'
 
 
