@@ -25,14 +25,14 @@ def make_property(data, key, n):
     state, value = data[key]
     if state == 'changed':
         value, new_value = value
-    states = {
+    operator = {
                 'nested': '  ',
                 'unchanged': '  ',
                 'deleted': '- ',
                 'added': '+ ',
                 'changed': '- '
                }
-    result = n*' ' + states[state] + str(key) + ': '
+    result = n*' ' + operator[state] + str(key) + ': '
     if state == 'nested':
         return result
     result += to_str(value, n+indent_step) + '\n'

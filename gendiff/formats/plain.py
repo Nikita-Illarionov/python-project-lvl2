@@ -1,4 +1,4 @@
-states = {
+operator = {
           'deleted': 'was removed',
           'added': 'was added with value: ',
           'changed': 'was updated. From '
@@ -29,7 +29,7 @@ def make_format(data, way):
 
 
 def make_property(state, key, way):
-    return "Property '" + way + str(key) + "' " + states[state]
+    return "Property '" + way + str(key) + "' " + operator[state]
 
 
 def to_str(value):
