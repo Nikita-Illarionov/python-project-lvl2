@@ -28,6 +28,8 @@ def make_format(data, way):
     return result
 
 
+# Выделил эту функцию, тк иначе CodeClimate ругается и ставит рейтинг D
+# (повторяются строки)
 def make_property(state, key, way):
     return "Property '" + way + str(key) + "' " + states[state]
 
