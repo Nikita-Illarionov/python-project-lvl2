@@ -1,27 +1,27 @@
-indent = 2
+start_indent = 2
 indent_step = 4
 
 
 def render(input_data):
-    return '{\n' + make_format(input_data, indent) + '}\n'
+    return '{\n' + to_stylish(input_data, start_indent) + '}\n'
 
 
-def make_format(data, n):
+def to_stylish(data, indent):
     result = ''
     keys = list(data.keys())
     keys.sort()
     for key in keys:
         state, value = data[key]
         if state == 'nested':
-            result += make_property(data, key, n) + '{\n'
-            result += make_format(value, n+indent_step)
-            result += n*' ' + '  }\n'
+            result += make_property(data, key, indent) + '{\n'
+            result += to_stylish(value, indent+indent_step)
+            result += indent*' ' + '  }\n'
         else:
-            result += make_property(data, key, n)
+            result += make_property(data, key, indent)
     return result
 
 
-def make_property(data, key, n):
+def make_property(data, key, indent):
     state, value = data[key]
     if state == 'changed':
         value, new_value = value
@@ -32,24 +32,28 @@ def make_property(data, key, n):
                 'added': '+ ',
                 'changed': '- '
                }
-    result = n*' ' + operator[state] + str(key) + ': '
+    result = indent*' ' + operator[state] + str(key) + ': '
     if state == 'nested':
         return result
-    result += to_str(value, n+indent_step) + '\n'
+    result += to_str(value, indent+indent_step) + '\n'
     if state != 'changed':
         return result
-    result += n*' ' + '+ ' + str(key) + ': ' + \
-        to_str(new_value, n+indent_step) + '\n'
+    result += indent*' ' + '+ ' + str(key) + ': ' + \
+        to_str(new_value, indent+indent_step) + '\n'
     return result
 
 
-def to_str(value, n):
+def to_str(value, indent):
+    if value == 'None':
+        return 'null'
+    if isinstance(value, bool):
+        return str(value).lower()
     if not isinstance(value, dict):
         return str(value)
     else:
         result = '{'
         keys = list(value.keys())
         for key in keys:
-            result += '\n' + n*' ' + '  ' + str(key) + ': ' + \
-                   to_str(value[key], n+4)
-        return result + '\n' + (n-2)*' ' + '}'
+            result += '\n' + indent*' ' + '  ' + str(key) + ': ' + \
+                   to_str(value[key], indent+4)
+        return result + '\n' + (indent-2)*' ' + '}'

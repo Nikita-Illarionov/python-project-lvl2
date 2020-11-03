@@ -1,42 +1,55 @@
-operator = {
-          'deleted': 'was removed',
-          'added': 'was added with value: ',
-          'changed': 'was updated. From '
-         }
-
-
 def render(input_data):
-    return make_format(input_data, '')
+    return '\n'.join(flatten(make_properties(input_data, ''))) + '\n'
 
 
-def make_format(data, way):
-    result = ''
+def make_properties(data, way):
+    result = []
     if way:  # Если у нас не начало пути,то уровни вложенности отделяем точками
         way += '.'
     for key in sorted(list(data.keys())):
         state, value = data[key]
         if state == 'nested':
-            result += make_format(value, way+str(key))
+            result.append(make_properties(value, way+str(key)))
         if state == 'deleted':
-            result += make_property(state, key, way) + '\n'
+            result.append(make_property(state, key, way))
         if state == 'added':
-            result += make_property(state, key, way) + to_str(value) + '\n'
+            result.append(make_property(state, key, way) + to_str(value))
         if state == 'changed':
             value, new_value = value
-            result += (make_property(state, key, way) + to_str(value) + ' to '
-                       + to_str(new_value) + '\n')
+            result.append(make_property(state, key, way) + to_str(value)
+                          + ' to ' + to_str(new_value))
     return result
 
 
 # Выделил эту функцию, тк иначе CodeClimate ругается и ставит рейтинг D
 # (повторяются строки)
 def make_property(state, key, way):
-    return "Property '" + way + str(key) + "' " + operator[state]
+    property_ = "Property '" + way + str(key) + "' "
+    if state == 'deleted':
+        return property_ + 'was removed'
+    if state == 'added':
+        return property_ + 'was added with value: '
+    return property_ + 'was updated. From '
 
 
 def to_str(value):
     if isinstance(value, dict):
         return '[complex value]'
-    if isinstance(value, bool) or value is None:
-        return str(value)
+    if value is None:
+        return 'null'
+    if isinstance(value, bool):
+        return str(value).lower()
     return "'" + str(value) + "'"
+
+
+def flatten(listing):
+    result = []
+
+    def iter(sublisting):
+        for item in sublisting:
+            if not isinstance(item, list):
+                result.append(item)
+            else:
+                iter(item)
+    iter(listing)
+    return result
