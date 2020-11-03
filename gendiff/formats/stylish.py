@@ -44,7 +44,7 @@ def make_property(data, key, indent):
 
 
 def to_str(value, indent):
-    if value is 'None':
+    if value == 'None':
         return 'null'
     if isinstance(value, bool):
         return str(value).lower()
