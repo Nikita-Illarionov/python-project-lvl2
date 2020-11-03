@@ -42,14 +42,11 @@ def to_str(value):
     return "'" + str(value) + "'"
 
 
-def flatten(listing):
+def flatten(tree):
     result = []
 
-    def iter(sublisting):
-        for item in sublisting:
-            if not isinstance(item, list):
-                result.append(item)
-            else:
-                iter(item)
-    iter(listing)
+    def inner(subtree):
+        list(map(lambda x: inner(x) if isinstance(x, list) else
+                 result.append(x), subtree))
+    inner(tree)
     return result
