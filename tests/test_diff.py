@@ -1,20 +1,9 @@
 from gendiff.build_diff import make_diff
+from gendiff.loading_file import extract_data
 import sys
 import pytest
-import json
-import os
 
 way = sys.path[0] + '/fixtures/'
-
-
-def read_file(name):
-    f = os.path.splitext(name)[1]
-    with open(way + name, 'r') as file:
-        if f == '.json':
-            return json.load(file)
-        return file.read()
-
-
 diff1 = {
               'timeout': ('changed', (50, 20)),
               'host': ('unchanged', 'hexlet.io'),
@@ -51,8 +40,10 @@ diff2 = {
         }
 
 
-cases = [(read_file('file1.json'), read_file('file2.json'), diff1),
-         (read_file('big_file1.json'), read_file('big_file2.json'), diff2)]
+cases = [(extract_data(way + 'file1.json'),
+          extract_data(way + 'file2.json'), diff1),
+         (extract_data(way + 'big_file1.json'),
+          extract_data(way + 'big_file2.json'), diff2)]
 
 
 @pytest.mark.parametrize('data1, data2, expected', cases)
