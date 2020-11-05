@@ -1,14 +1,16 @@
-from gendiff.build_diff import generate_diff, make_diff
+from gendiff.build_diff import make_diff
 import sys
 import pytest
 import json
+import os
 
 way = sys.path[0] + '/fixtures/'
 
 
-def read_file(name, f='txt'):
+def read_file(name):
+    f = os.path.splitext(name)[1]
     with open(way + name, 'r') as file:
-        if f == 'json':
+        if f == '.json':
             return json.load(file)
         return file.read()
 
@@ -49,34 +51,10 @@ diff2 = {
         }
 
 
-cases_for_diff = [(read_file('file1.json', f='json'),
-                   read_file('file2.json', f='json'),
-                   diff1),
-                  (read_file('big_file1.json', f='json'),
-                   read_file('big_file2.json', f='json'),
-                   diff2)]
+cases = [(read_file('file1.json'), read_file('file2.json'), diff1),
+         (read_file('big_file1.json'), read_file('big_file2.json'), diff2)]
 
 
-cases_for_render = [
-         (way + 'small_file1.json', way + 'small_file2.json', 'plain',
-          read_file('answer_small_plain.txt')),
-         (way + 'file1.json', way + 'file2.json', 'stylish',
-          read_file('answer_stylish1.txt')),
-         (way + 'file1.yaml', way + 'file2.yaml', 'stylish',
-          read_file('answer_stylish1.txt')),
-         (way + 'big_file1.json', way + 'big_file2.json', 'stylish',
-          read_file('answer_stylish2.txt')),
-         (way + 'big_file1.json', way + 'big_file2.json', 'plain',
-          read_file('answer_plain.txt')),
-         (way + 'file1.yaml', way + 'file2.yaml', 'json',
-          read_file('answer_json.txt'))]
-
-
-@pytest.mark.parametrize('data1, data2, expected', cases_for_diff)
+@pytest.mark.parametrize('data1, data2, expected', cases)
 def test_diff(data1, data2, expected):
     assert make_diff(data1, data2) == expected
-
-
-@pytest.mark.parametrize('path1, path2, f, expected', cases_for_render)
-def test_format(path1, path2, f, expected):
-    assert generate_diff(path1, path2, f) == expected

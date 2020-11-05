@@ -11,25 +11,15 @@ def make_properties(data, way):
         if state == 'nested':
             result.append(make_properties(value, way+str(key)))
         if state == 'deleted':
-            result.append(make_property(state, key, way))
+            result.append(f"Property '{way}{key}' was removed")
         if state == 'added':
-            result.append(make_property(state, key, way) + to_str(value))
+            result.append("Property '{}{}' was added with value: {}".format(
+                                                    way, key, to_str(value)))
         if state == 'changed':
             value, new_value = value
-            result.append(make_property(state, key, way) + to_str(value)
-                          + ' to ' + to_str(new_value))
+            result.append("Property '{}{}' was updated. From {} to {}".format(
+                                  way, key, to_str(value), to_str(new_value)))
     return result
-
-
-# Выделил эту функцию, тк иначе CodeClimate ругается и ставит рейтинг D
-# (повторяются строки)
-def make_property(state, key, way):
-    property_ = "Property '" + way + str(key) + "' "
-    if state == 'deleted':
-        return property_ + 'was removed'
-    if state == 'added':
-        return property_ + 'was added with value: '
-    return property_ + 'was updated. From '
 
 
 def to_str(value):
