@@ -1,44 +1,10 @@
 from gendiff.build_diff import make_diff
 from gendiff.loading_file import extract_data
+from fixtures import diff1, diff2
 import sys
 import pytest
 
 way = sys.path[0] + '/fixtures/'
-diff1 = {
-              'timeout': ('changed', (50, 20)),
-              'host': ('unchanged', 'hexlet.io'),
-              'proxy': ('deleted', '123.234.53.22'),
-              'verbose': ('added', True),
-              'follow': ('deleted', False)
-        }
-diff2 = {
-              'common': ('nested', {
-                  'setting3': ('changed', (True, {'key': 'value'})),
-                  'setting6': ('nested', {
-                      'doge': ('nested', {
-                          'wow': ('changed', ('too much', 'so much'))
-                      }),
-                      'key': ('unchanged', 'value'),
-                      'ops': ('added', 'vops')
-                  }),
-                  'setting1': ('unchanged', 'Value 1'),
-                  'setting2': ('deleted', 200),
-                  'setting5': ('added', {'key5': 'value5'}),
-                  'setting4': ('added', 'blah blah'),
-                  'follow': ('added', False)
-              }),
-              'group1': ('nested', {
-                  'baz': ('changed', ('bas', 'bars')),
-                  'nest': ('changed', ({'key': 'value'}, 'str')),
-                  'foo': ('unchanged', 'bar')
-              }),
-              'group2': ('deleted', {'abc': 12345, 'deep': {'id': 45}}),
-              'group3': ('added', {
-                              'fee': 100500,
-                              'deep': {'id': {'number': 45}}
-                         })
-        }
-
 
 cases = [(extract_data(way + 'file1.json'),
           extract_data(way + 'file2.json'), diff1),
