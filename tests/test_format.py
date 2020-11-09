@@ -30,6 +30,12 @@ cases = [
              "{expected}".format(expected='answer_plain.txt')
          ),
          (
+             "{path1}".format(path1=way + 'big_file1.yaml'),
+             "{path2}".format(path2=way + 'big_file2.yaml'),
+             "{f}".format(f='plain'),
+             "{expected}".format(expected='answer_plain.txt')
+         ),
+         (
              "{path1}".format(path1=way + 'file1.yaml'),
              "{path2}".format(path2=way + 'file2.yaml'),
              "{f}".format(f='json'),
