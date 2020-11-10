@@ -20,10 +20,21 @@ Section "group2" was removed
 ~~~
 
 Инструкция по установке и использованию (видеоинструкцию можно посмотреть ниже):
-- создать виртуальное окружение: python -m venv test_env
-- обновить pip (рекомендуется): test_env/bin/pip install --upgrade pip
-- скачать утилиту: test_env/bin/pip install -i https://test.pypi.org/simple/ nikita-illarionov-gendiff
-- запустить утилиту (команда gendiff): gendiff file_path1 file_path2
+- создать виртуальное окружение:
+~~~
+python -m venv test_env
+~~~
+- обновить pip (рекомендуется):
+~~~
+test_env/bin/pip install --upgrade pip
+~~~
+- скачать утилиту: 
+~~~
+test_env/bin/pip install -i https://test.pypi.org/simple/ nikita-illarionov-gendiff
+~~~
+- запустить утилиту (команда gendiff):
+~~~gendiff file_path1 file_path2
+~~~
 
 Видео-инструкции по установке и использованию:
 <a href="https://asciinema.org/a/AsTwN0oXV1AFxKqZg6g5po4tC" target="_blank"><img src="https://asciinema.org/a/AsTwN0oXV1AFxKqZg6g5po4tC.svg" /></a>
