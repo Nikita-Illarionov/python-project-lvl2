@@ -33,7 +33,8 @@ test_env/bin/pip install --upgrade pip
 test_env/bin/pip install -i https://test.pypi.org/simple/ nikita-illarionov-gendiff
 ~~~
 - запустить утилиту (команда gendiff):
-~~~gendiff file_path1 file_path2
+~~~
+gendiff file_path1 file_path2
 ~~~
 
 Видео-инструкции по установке и использованию:
